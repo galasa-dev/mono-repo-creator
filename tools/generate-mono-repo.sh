@@ -173,6 +173,7 @@ function push_repo_to_github() {
     h2 "Pushing the 'galasa' repo to github.com"
     cd $GALASA_DIR
     gh repo new \
+    $GIT_ORG/galasa \
     --description "The Galasa source code" \
     --public \
     --push \
