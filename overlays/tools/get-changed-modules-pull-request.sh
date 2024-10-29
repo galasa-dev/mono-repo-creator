@@ -105,7 +105,7 @@ function get_paths_changed_in_pr() {
     h1 "Getting the file paths changed in Pull Request number ${pr_number}" 
 
     # Extract changed module names from changed files from GitHub CLI output
-    mapfile -t changed_files_in_pr < <(gh pr diff --repo jadecarino/galasa ${pr_number} --name-only)
+    mapfile -t changed_files_in_pr < <(gh pr diff --repo galasa-dev/galasa ${pr_number} --name-only)
 
     h2 "Files changed:"
 
