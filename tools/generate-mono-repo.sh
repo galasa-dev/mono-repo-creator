@@ -61,7 +61,7 @@ note() { printf "\n${underline}${bold}${blue}Note:${reset} ${blue}%s${reset}\n" 
 #
 # Tailor these to suit your environment
 #-------------------------------------------------------------------------- 
-export GIT_ORG="techcobweb"
+export GIT_ORG="galasa-dev"
 
 function delete_local_galasa_repo() {
     h2 "Deleting the $GALASA_DIR repo"
@@ -104,6 +104,13 @@ function copy_overlays_into_mono_repo() {
     $cmd
     rc=$? ; if [[ "$rc" != "0" ]]; then error "Failed to copy 'overlays' into the 'galasa' folder" ; exit 1 ; fi
     success "Copied overlays over the top of the original repo contents."
+
+    h2 "Copying hidden folders from 'overlays' into the 'galasa' project"
+    cmd="cp -R $PROJECT_DIR/overlays/. $GALASA_DIR"
+    info "Command is $cmd"
+    $cmd
+    rc=$? ; if [[ "$rc" != "0" ]]; then error "Failed to copy hidden folders from 'overlays' into the 'galasa' folder" ; exit 1 ; fi
+    success "Copied hidden folders from overlays over the top of the original repo contents."
 
     git add .
     rc=$? ; if [[ "$rc" != "0" ]]; then error "Failed to add 'overlays' into the 'galasa' repo staging area" ; exit 1 ; fi
@@ -166,6 +173,7 @@ function push_repo_to_github() {
     h2 "Pushing the 'galasa' repo to github.com"
     cd $GALASA_DIR
     gh repo new \
+    $GIT_ORG/galasa \
     --description "The Galasa source code" \
     --public \
     --push \
@@ -194,7 +202,6 @@ merge_in_repo framework
 merge_in_repo extensions
 merge_in_repo managers
 merge_in_repo obr
-merge_in_repo cli
 
 copy_overlays_into_mono_repo
 

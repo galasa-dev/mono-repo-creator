@@ -89,7 +89,6 @@ module_names=(\
     "extensions" \
     "managers" \
     "obr" \
-    "cli" \
 )
 
 function check_module_name_is_supported() {
@@ -246,17 +245,6 @@ function build_module() {
         h2 "Building $module"
         cd ${PROJECT_DIR}/modules/$module
         ${PROJECT_DIR}/modules/$module/build-locally.sh
-        rc=$? ;  if [[ "${rc}" != "0" ]]; then error "Failed to build module $module. rc=$rc" ; exit 1 ; fi
-        success "Built module $module OK"
-        if [[ "$chain" == "true" ]]; then 
-            module="cli"
-        fi
-    fi
-
-    # cli
-    if [[ "$module" == "cli" ]]; then
-        cd ${PROJECT_DIR}/modules/$module
-        ${PROJECT_DIR}/modules/$module/build-locally.sh --clean
         rc=$? ;  if [[ "${rc}" != "0" ]]; then error "Failed to build module $module. rc=$rc" ; exit 1 ; fi
         success "Built module $module OK"
     fi
